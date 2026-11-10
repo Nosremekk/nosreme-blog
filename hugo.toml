@@ -1,0 +1,59 @@
+baseURL = 'https://blog.nosreme.cloud/'
+locale = 'pt-BR'
+title = 'Nosreme'
+paginate = 10
+enableRobotsTXT = true
+summaryLength = 32
+
+[languages]
+  [languages.pt]
+    locale = 'pt-BR'
+    label = 'Português'
+    title = 'Nosreme'
+
+[params]
+  author = 'Nosreme'
+  description = 'Caderno de ensaios, literatura, filosofia, tecnologia, cultura e jogos.'
+  editorialTagline = 'Caderno independente de ensaios, filosofia, literatura, tecnologia e cultura.'
+  headerBrand = 'nosreme.'
+  sinceYear = 2026
+  mainSiteUrl = 'https://nosreme.cloud'
+
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+  page = ['HTML']
+  section = ['HTML', 'RSS']
+  taxonomy = ['HTML']
+  term = ['HTML', 'RSS']
+
+[permalinks]
+  posts = '/posts/:contentbasename/'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+    [markup.goldmark.extensions]
+      typographer = true
+      footnote = true
+      definitionList = true
+      table = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+  [markup.highlight]
+    lineNos = false
+    lineNumbersInTable = false
+    noClasses = false
+    tabWidth = 2
+    guessSyntax = true
+
+[sitemap]
+  changefreq = 'weekly'
+  priority = 0.7
+  filename = 'sitemap.xml'

@@ -1,0 +1,17 @@
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-copy">
+      <span>&copy; {{ now.Format "2006" }} {{ site.Params.author | default site.Title }}.</span>
+      <span style="margin-left: 0.5rem; color: var(--text-faint);">Publicação editorial independente.</span>
+    </div>
+
+    <div class="footer-links">
+      <a href="{{ "/index.xml" | relURL }}" class="footer-link">RSS</a>
+      <a href="{{ "/sitemap.xml" | relURL }}" class="footer-link">Sitemap</a>
+      <a href="#top" class="footer-link" aria-label="Voltar ao início da página">↑ Topo</a>
+    </div>
+  </div>
+</footer>
+
+{{ $js := resources.Get "js/main.js" | minify | fingerprint }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>

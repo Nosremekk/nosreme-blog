@@ -1,0 +1,6 @@
+<figure class="editorial-figure">
+  <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{ with .Title }}title="{{ . }}"{{ end }} loading="lazy" decoding="async">
+  {{ with or .Title .Text }}
+  <figcaption>{{ . }}</figcaption>
+  {{ end }}
+</figure>

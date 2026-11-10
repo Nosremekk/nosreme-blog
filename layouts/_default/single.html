@@ -1,0 +1,82 @@
+{{ define "main" }}
+<div class="container">
+  <article class="reading-column">
+    <header class="post-header">
+      {{ partial "post-meta.html" . }}
+
+      <h1 class="post-main-title">{{ .Title }}</h1>
+
+      {{ with .Description }}
+      <p class="post-lead">{{ . }}</p>
+      {{ end }}
+
+      <div class="article-actions">
+        {{ with .Params.tags }}
+        <div class="post-tags" aria-label="Tags do artigo">
+          {{ range . }}
+          <a href="{{ "/tags/" | relURL }}{{ . | urlize }}/" class="post-tag">#{{ . }}</a>
+          {{ end }}
+        </div>
+        {{ end }}
+
+        <button id="copy-link-btn" class="copy-link-btn" type="button" aria-label="Copiar link permanente deste artigo">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
+          <span>Copiar link</span>
+        </button>
+      </div>
+    </header>
+
+    {{ partial "toc.html" . }}
+
+    <div class="article-content">
+      {{ .Content }}
+    </div>
+
+    {{ with .Params.originalUrl }}
+    <div class="original-publication-note" style="margin-top: var(--spacing-lg); padding: 0.85rem 1.15rem; border-left: 2px solid var(--accent); background-color: var(--bg-surface); font-family: var(--font-sans); font-size: 0.85rem; color: var(--text-muted); border-radius: 2px;">
+      <span>Publicado originalmente no <a href="{{ . }}" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 500;">{{ $.Params.originalPublication | default "Substack" }}</a>.</span>
+    </div>
+    {{ end }}
+
+    <!-- Navegação Cronológica entre Artigos -->
+    {{ if or .PrevInSection .NextInSection }}
+    <nav class="post-navigation" aria-label="Navegação entre artigos">
+      <div class="nav-prev">
+        {{ with .PrevInSection }}
+        <span class="nav-direction">&larr; Anterior</span>
+        <a href="{{ .RelPermalink }}" class="nav-post-title">{{ .Title }}</a>
+        {{ end }}
+      </div>
+      <div class="nav-next">
+        {{ with .NextInSection }}
+        <span class="nav-direction">Próximo &rarr;</span>
+        <a href="{{ .RelPermalink }}" class="nav-post-title">{{ .Title }}</a>
+        {{ end }}
+      </div>
+    </nav>
+    {{ end }}
+
+    <!-- Artigos Relacionados -->
+    {{ $related := site.RegularPages.Related . | first 3 }}
+    {{ with $related }}
+    <section class="related-posts-section" aria-label="Artigos relacionados">
+      <div class="section-label">Ensaios Relacionados</div>
+      <ul class="related-posts-list">
+        {{ range . }}
+        <li class="related-post-item">
+          <a href="{{ .RelPermalink }}" class="related-post-link">{{ .Title }}</a>
+          <time class="related-post-date" datetime="{{ .Date.Format "2006-01-02" }}">
+            {{ .Date.Day }} de {{ index (slice "" "jan" "fev" "mar" "abr" "mai" "jun" "jul" "ago" "set" "out" "nov" "dez") .Date.Month }} de {{ .Date.Year }}
+          </time>
+        </li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+
+  </article>
+</div>
+{{ end }}

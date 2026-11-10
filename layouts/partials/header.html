@@ -1,0 +1,43 @@
+<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <div class="brand-wrapper">
+      <a href="{{ "/" | relURL }}" class="brand-logo" aria-label="Nosreme — Página inicial">
+        {{ site.Params.headerBrand | default "nosreme." }}
+      </a>
+    </div>
+
+    <nav class="site-nav" aria-label="Navegação principal">
+      <a href="{{ "/" | relURL }}" class="nav-link" {{ if .IsHome }}aria-current="page"{{ end }}>Início</a>
+      <a href="{{ "/posts/" | relURL }}" class="nav-link" {{ if and (not .IsHome) (or (eq .Section "posts") (eq .Type "posts")) }}aria-current="page"{{ end }}>Artigos</a>
+      <a href="{{ "/categories/" | relURL }}" class="nav-link" {{ if eq .Section "categories" }}aria-current="page"{{ end }}>Categorias</a>
+      <a href="{{ "/arquivo/" | relURL }}" class="nav-link" {{ if eq .RelPermalink "/arquivo/" }}aria-current="page"{{ end }}>Arquivo</a>
+      <a href="{{ "/sobre/" | relURL }}" class="nav-link" {{ if eq .RelPermalink "/sobre/" }}aria-current="page"{{ end }}>Sobre</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="{{ "/pesquisa/" | relURL }}" class="icon-btn" aria-label="Pesquisar artigos" title="Pesquisar artigos">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </a>
+
+      <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema de cores" title="Alternar tema de cores" type="button">
+        <!-- Ícone que se adapta ou alterna -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

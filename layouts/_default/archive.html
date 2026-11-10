@@ -1,0 +1,48 @@
+{{ define "main" }}
+<div class="container">
+  <header style="margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--border-subtle);">
+    <h1 style="margin: 0 0 0.5rem 0;">{{ .Title }}</h1>
+    <p style="font-size: 1.15rem; color: var(--text-muted); margin: 0; font-style: italic;">
+      Registro cronológico integral de ensaios, anotações e publicações.
+    </p>
+
+    <!-- Filtro rápido por categorias -->
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; font-family: var(--font-sans); font-size: 0.8rem;">
+      <span style="color: var(--text-faint); margin-right: 0.25rem;">Navegar por tema:</span>
+      {{ range $name, $taxonomy := site.Taxonomies.categories }}
+      <a href="{{ "/categories/" | relURL }}{{ $name | urlize }}/" class="post-tag">
+        {{ $name | humanize }} ({{ $taxonomy.Count }})
+      </a>
+      {{ end }}
+    </div>
+  </header>
+
+  {{- $posts := where site.RegularPages "Type" "in" (slice "posts" "post") -}}
+  {{- $posts = where $posts "Draft" false -}}
+
+  {{ if gt (len $posts) 0 }}
+    {{ range $posts.GroupByDate "2006" }}
+    <section class="archive-year-group" aria-label="Artigos de {{ .Key }}">
+      <h2 class="archive-year-title">{{ .Key }}</h2>
+      <ul class="archive-list">
+        {{ range .Pages }}
+        <li class="archive-item">
+          <time class="archive-date" datetime="{{ .Date.Format "2006-01-02" }}">
+            {{ .Date.Day }} {{ index (slice "" "jan" "fev" "mar" "abr" "mai" "jun" "jul" "ago" "set" "out" "nov" "dez") .Date.Month }}
+          </time>
+          <a href="{{ .RelPermalink }}" class="archive-title">{{ .Title }}</a>
+          {{ with .Params.categories }}
+          <a href="{{ "/categories/" | relURL }}{{ index . 0 | urlize }}/" class="archive-category">
+            {{ index . 0 }}
+          </a>
+          {{ end }}
+        </li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+  {{ else }}
+    <p style="color: var(--text-muted); font-style: italic;">Nenhuma publicação no arquivo até o momento.</p>
+  {{ end }}
+</div>
+{{ end }}

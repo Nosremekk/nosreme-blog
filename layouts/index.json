@@ -1,0 +1,11 @@
+{{- $pages := where site.RegularPages "Type" "in" (slice "posts" "post") -}}
+{{- $pages = where $pages "Draft" false -}}
+{{- $months := slice "" "janeiro" "fevereiro" "março" "abril" "maio" "junho" "julho" "agosto" "setembro" "outubro" "novembro" "dezembro" -}}
+{{- $index := slice -}}
+{{- range $pages -}}
+  {{- $cleanContent := .Plain | replaceRE "[\\r\\n\\t]+" " " | strings.Truncate 350 -}}
+  {{- $formattedDate := printf "%d de %s de %d" .Date.Day (index $months .Date.Month) .Date.Year -}}
+  {{- $item := dict "title" .Title "permalink" .RelPermalink "date" $formattedDate "summary" (.Description | default .Summary | plainify) "content" $cleanContent "categories" .Params.categories "tags" .Params.tags -}}
+  {{- $index = $index | append $item -}}
+{{- end -}}
+{{- $index | jsonify -}}

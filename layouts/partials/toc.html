@@ -1,0 +1,10 @@
+{{ if and (ne .Params.toc false) (gt (len .TableOfContents) 40) }}
+<aside class="toc-wrapper" aria-label="Sumário do artigo">
+  <details class="toc-details" open>
+    <summary>Sumário</summary>
+    <div class="toc-content">
+      {{ .TableOfContents }}
+    </div>
+  </details>
+</aside>
+{{ end }}

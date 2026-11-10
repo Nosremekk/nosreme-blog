@@ -1,0 +1,4 @@
+<aside class="editorial-sidenote" role="note">
+  <span class="sidenote-label">{{ with .Get "label" }}{{ . }}{{ else }}Nota:{{ end }}</span>
+  <span class="sidenote-content">{{ .Inner | markdownify }}</span>
+</aside>

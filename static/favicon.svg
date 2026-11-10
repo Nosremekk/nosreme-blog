@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    text {
+      font-family: "Charter", "Georgia", serif;
+      font-size: 24px;
+      font-weight: 700;
+      fill: #1c1b18;
+    }
+    @media (prefers-color-scheme: dark) {
+      text {
+        fill: #ecebe8;
+      }
+    }
+  </style>
+  <text x="4" y="24">n.</text>
+</svg>

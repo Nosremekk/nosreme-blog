@@ -1,0 +1,9 @@
+<blockquote class="editorial-epigraph">
+  <div class="epigraph-text">{{ .Inner | markdownify }}</div>
+  {{ if or (.Get "author") (.Get "source") }}
+  <footer class="epigraph-footer">
+    {{ with .Get "author" }}<span class="epigraph-author">— {{ . }}</span>{{ end }}
+    {{ with .Get "source" }}<cite class="epigraph-source">, <em>{{ . }}</em></cite>{{ end }}
+  </footer>
+  {{ end }}
+</blockquote>

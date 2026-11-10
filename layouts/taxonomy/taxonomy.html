@@ -1,0 +1,34 @@
+{{ define "main" }}
+<div class="container">
+  <header style="margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--border-subtle);">
+    <div style="font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.5rem;">
+      Categoria
+    </div>
+    <h1 style="margin: 0 0 0.5rem 0;">{{ .Title }}</h1>
+    {{ with .Description }}
+    <p style="font-size: 1.15rem; color: var(--text-muted); margin: 0; font-style: italic;">{{ . }}</p>
+    {{ end }}
+  </header>
+
+  <div class="recent-posts-section">
+    {{ $pages := .Pages }}
+    {{ if gt (len $pages) 0 }}
+      {{ range $pages }}
+      <article class="post-entry">
+        <div class="post-entry-header">
+          {{ partial "post-meta.html" . }}
+          <h2 class="post-entry-title">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h2>
+        </div>
+        <p class="post-entry-summary">
+          {{ .Description | default .Summary | plainify }}
+        </p>
+      </article>
+      {{ end }}
+    {{ else }}
+      <p style="color: var(--text-muted); font-style: italic;">Nenhum artigo encontrado nesta categoria.</p>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,23 @@
+<div class="post-meta">
+  <span class="meta-item">
+    <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+      {{ .Date.Day }} de {{ index (slice "" "janeiro" "fevereiro" "março" "abril" "maio" "junho" "julho" "agosto" "setembro" "outubro" "novembro" "dezembro") .Date.Month }} de {{ .Date.Year }}
+    </time>
+  </span>
+
+  <span class="meta-separator">•</span>
+
+  <span class="meta-item">
+    {{ .ReadingTime }} min de leitura
+  </span>
+
+  {{ with .Params.categories }}
+  <span class="meta-separator">•</span>
+  <span class="meta-item">
+    {{ range $index, $cat := . }}
+      {{ if gt $index 0 }}, {{ end }}
+      <a href="{{ "/categories/" | relURL }}{{ $cat | urlize }}/" class="meta-category">{{ $cat }}</a>
+    {{ end }}
+  </span>
+  {{ end }}
+</div>

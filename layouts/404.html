@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div class="container reading-column">
+  <div class="error-page">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Página Não Encontrada</h1>
+    <p class="error-message">
+      O ensaio ou documento que você procura não está neste endereço. O texto pode ter sido renomeado, arquivado ou nunca existiu nesta coordenada.
+    </p>
+    <div class="error-links">
+      <a href="{{ "/" | relURL }}" style="font-weight: 500; color: var(--accent);">&larr; Retornar à página inicial</a>
+      <span style="color: var(--border-strong);">|</span>
+      <a href="{{ "/pesquisa/" | relURL }}" style="color: var(--text-muted);">Buscar no arquivo</a>
+    </div>
+  </div>
+</div>
+{{ end }}

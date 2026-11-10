@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div class="container">
+  <article class="reading-column">
+    <header class="post-header">
+      <h1 class="post-main-title">{{ .Title }}</h1>
+      {{ with .Description }}
+      <p class="post-lead">{{ . }}</p>
+      {{ end }}
+    </header>
+
+    <div class="article-content">
+      {{ .Content }}
+    </div>
+  </article>
+</div>
+{{ end }}

@@ -1,0 +1,96 @@
+{{ define "main" }}
+<div class="container">
+
+  <!-- Apresentação Editorial -->
+  <section class="editorial-hero">
+    <div class="hero-tagline">Caderno de Ideias &amp; Ensaios</div>
+    <div class="hero-statement">
+      Investigações sobre literatura, filosofia, arquitetura de sistemas e a cultura contemporânea.
+    </div>
+    <p class="hero-description">
+      Um espaço de escrita descompromissado com os algoritmos de urgência da rede. Leituras atentas, notas artesanais e ensaios que demandam tempo e silêncio.
+    </p>
+  </section>
+
+  {{- $allPosts := where site.RegularPages "Type" "in" (slice "posts" "post") -}}
+  {{- $allPosts = where $allPosts "Draft" false -}}
+
+  {{- /* Artigo em Destaque */ -}}
+  {{- $featured := where $allPosts ".Params.featured" true | first 1 -}}
+  {{- if not $featured -}}
+    {{- $featured = $allPosts | first 1 -}}
+  {{- end -}}
+
+  {{- with index $featured 0 -}}
+  <section class="featured-post-section" aria-label="Artigo em destaque">
+    <div class="section-label">Ensaio em Destaque</div>
+    <article class="featured-card">
+      {{ partial "post-meta.html" . }}
+      <h2 class="post-title">
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </h2>
+      <p class="post-summary">
+        {{ .Description | default .Summary | plainify }}
+      </p>
+      <div>
+        <a href="{{ .RelPermalink }}" style="font-family: var(--font-sans); font-size: 0.88rem; font-weight: 500; color: var(--accent);">
+          Continuar a leitura &rarr;
+        </a>
+      </div>
+    </article>
+  </section>
+  {{- end -}}
+
+  <!-- Artigos Recentes -->
+  <section class="recent-posts-section" aria-label="Artigos recentes">
+    <div class="section-label">Publicações Recentes</div>
+    {{- $recentPosts := $allPosts -}}
+    {{- with index $featured 0 -}}
+      {{- $recentPosts = where $allPosts "RelPermalink" "ne" .RelPermalink -}}
+    {{- end -}}
+
+    {{- if gt (len $recentPosts) 0 -}}
+      {{- range first 5 $recentPosts -}}
+      <article class="post-entry">
+        <div class="post-entry-header">
+          {{ partial "post-meta.html" . }}
+          <h3 class="post-entry-title">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h3>
+        </div>
+        <p class="post-entry-summary">
+          {{ .Description | default .Summary | plainify }}
+        </p>
+      </article>
+      {{- end -}}
+
+      <div style="margin-top: 2rem; text-align: left;">
+        <a href="{{ "/arquivo/" | relURL }}" style="font-family: var(--font-sans); font-size: 0.9rem; font-weight: 500; color: var(--accent); text-decoration: none;">
+          Ver todo o arquivo de publicações &rarr;
+        </a>
+      </div>
+    {{- else -}}
+      <p style="color: var(--text-muted); font-style: italic;">Nenhum outro artigo publicado até o momento.</p>
+    {{- end -}}
+  </section>
+
+  <!-- Categorias Editoriais -->
+  <section class="categories-showcase" aria-label="Seções do blog">
+    <div class="section-label">Categorias Temáticas</div>
+    <div class="categories-grid">
+      {{- range $name, $taxonomy := site.Taxonomies.categories -}}
+      <a href="{{ "/categories/" | relURL }}{{ $name | urlize }}/" class="category-card">
+        <div class="category-card-name">
+          <span>{{ $name | humanize }}</span>
+          <span class="category-card-count">{{ $taxonomy.Count }}</span>
+        </div>
+        <p class="category-card-desc">
+          Explorar ensaios e reflexões na seção de {{ $name | humanize }}.
+        </p>
+      </a>
+      {{- end -}}
+    </div>
+  </section>
+
+</div>
+{{ end }}
